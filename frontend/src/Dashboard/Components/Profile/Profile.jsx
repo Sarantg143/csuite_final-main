@@ -45,7 +45,6 @@ const Profile = () => {
       .get(`${apiBaseUrl}/user/user/${id}`)
       .then((response) => {
         // console.log(response.data.user);
-        // const data = response.data.users[1];
         const data = response.data.user;
         // console.log(response.data.users[0]._id);
         setProfileData(data);

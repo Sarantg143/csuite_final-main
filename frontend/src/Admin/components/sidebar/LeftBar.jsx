@@ -1,12 +1,12 @@
 // src/components/Sidebar.js
 import React from "react";
-import { Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./sidebar.css";
 import logo from "../Assets/logo.png";
 
 const LeftBar = () => {
   return (
-    <div className="sidebar">
+    <div className="sidebar1">
       <div className="logo-container">
         <img src={logo} alt="Logo" className="logo" />
       </div>

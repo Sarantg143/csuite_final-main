@@ -178,7 +178,6 @@ const Enrolled = () => {
           </div>
           <div className="courseContainer3">
             {filterCourses(selectedFilters).map((course) => (
-              // {/* {coursesData.map((course) => ( */}
               <div className="courseCard3" key={course._id}>
                 <div className="courseOverlay3">
                   <div className="courseImageBox3">

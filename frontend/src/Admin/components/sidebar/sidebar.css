@@ -1,5 +1,5 @@
 /* src/components/Sidebar.css */
-.sidebar {
+.sidebar1 {
   display: none;
   flex-direction: column;
   position: fixed;
@@ -76,7 +76,7 @@
 }
 
 @media (min-width: 1000px) {
-  .sidebar {
+  .sidebar1 {
     display: flex;
   }
 }
