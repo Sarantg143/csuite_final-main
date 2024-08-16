@@ -3,6 +3,8 @@ import { NavLink } from "react-router-dom";
 import logoShort from "../Assets/Images/logoShort.png";
 import logoTxt from "../Assets/Images/logoTxt.png";
 import "./Sidebar.css";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHome,
@@ -25,6 +27,7 @@ function SidebarItem({
   loggedOut,
 }) {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleResize = () => {
@@ -58,11 +61,13 @@ function SidebarItem({
         expanded ? "expanded" : "collapsed"
       }`}
       end={true}
-      onClick={() =>
-        loggedOut
-          ? alert("not logged out but function triggered, edit in sidebar.jsx")
-          : ""
-      }
+      onClick={() => {
+        if (loggedOut) {
+          localStorage.clear();
+          navigate("/");
+          toast.success("Logout Successful");
+        }
+      }}
     >
       <FontAwesomeIcon icon={icon} className="icon" style={iconStyle} />
       <span
@@ -192,7 +197,7 @@ const Sidebar = () => {
             />
             <SidebarItem
               icon={faSignOutAlt}
-              path={"./logout"}
+              path={"/"}
               text={"Logout"}
               expanded={expanded}
               loggedOut={true}

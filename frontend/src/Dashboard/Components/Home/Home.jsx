@@ -18,11 +18,11 @@ function Home() {
     const fetchData = async () => {
       try {
         const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
-        const response = await axios.get(`https://csuite-production.up.railway.app/api/courseDetail`);
+        const response = await axios.get(`${apiBaseUrl}/courseDetail`);
         const courses = response.data;
 
         //
-        const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+        const userInfo = JSON.parse(localStorage.getItem("userDataUpdated"));
         if (userInfo) {
           const { coursePurchased } = userInfo;
 

@@ -26,7 +26,7 @@ const Enrolled = () => {
         const allCourses = coursesResponse.data;
 
         // isUserLogin ?
-        const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+        const userInfo = JSON.parse(localStorage.getItem("userDataUpdated"));
         console.log(userInfo);
         if (userInfo) {
           const { coursePurchased } = userInfo;

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import assets from "../assets/assets";
 import { auth } from "../../firebase/firebaseConfig";
 import { signInWithEmailAndPassword } from "@firebase/auth";
-import { toast } from "react-toastify";
+import { toast } from "react-toastify"; 
 import { isStrongPassword, isValidEmail } from "../../utils/validityCheck";
 import { googlePopup } from "../../firebase/auth_google_popup";
 import { signinMicrosoft } from "../../firebase/auth_microsoft_execute";

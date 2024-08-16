@@ -40,75 +40,115 @@ const Profile = () => {
   useEffect(() => {
     const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
     const id = localStorage.getItem("userid");
+    const userInfo = JSON.parse(localStorage.getItem("userDataUpdated"));
+    if (userInfo) {
+      // console.log(response.data.user);
+      const data = userInfo;
+      // console.log(response.data.users[0]._id);
+      setProfileData(data);
 
-    axios
-      .get(`${apiBaseUrl}/user/user/${id}`)
-      .then((response) => {
-        // console.log(response.data.user);
-        const data = response.data.user;
-        // console.log(response.data.users[0]._id);
-        setProfileData(data);
+      // usid
+      const csuiteUserInfo = {
+        userID: data._id,
+        coursePurchased:
+          data.coursePurchased != []
+            ? data.coursePurchased.map((x) => x.courseId)
+            : [],
+      };
+      localStorage.setItem("userInfo", JSON.stringify(csuiteUserInfo));
 
-        // usid
-        const csuiteUserInfo = {
-          userID: data._id,
-          coursePurchased:
-            data.coursePurchased != []
-              ? data.coursePurchased.map((x) => x.courseId)
-              : [],
-        };
-        localStorage.setItem("userInfo", JSON.stringify(csuiteUserInfo));
-        //
+      if (
+        data.profilePic &&
+        !data.profilePic.startsWith("data:image/jpeg;base64,")
+      ) {
+        setProfileData((prevData) => ({
+          ...prevData,
+          profilePic: `data:image/jpeg;base64,${data.profilePic}`,
+        }));
+      } else if (data.profilePic) {
+        setProfileData((prevData) => ({
+          ...prevData,
+          profilePic: data.profilePic,
+        }));
+      }
 
-        // if (data.profilePic) {
-        //   setProfileData((prevData) => ({
-        //     ...prevData,
-        //     profilePic: `data:image/jpeg;base64,${data.profilePic}`,
-        //   }));
-        // }
-        // if (data.profileBanner) {
-        //   setProfileData((prevData) => ({
-        //     ...prevData,
-        //     profileBanner: `data:image/jpeg;base64,${data.profileBanner}`,
-        //   }));
-        // }
-        if (
-          data.profilePic &&
-          !data.profilePic.startsWith("data:image/jpeg;base64,")
-        ) {
-          setProfileData((prevData) => ({
-            ...prevData,
-            profilePic: `data:image/jpeg;base64,${data.profilePic}`,
-          }));
-        } else if (data.profilePic) {
-          setProfileData((prevData) => ({
-            ...prevData,
-            profilePic: data.profilePic,
-          }));
-        }
+      if (
+        data.profileBanner &&
+        !data.profileBanner.startsWith("data:image/jpeg;base64,")
+      ) {
+        setProfileData((prevData) => ({
+          ...prevData,
+          profileBanner: `data:image/jpeg;base64,${data.profileBanner}`,
+        }));
+      } else if (data.profileBanner) {
+        setProfileData((prevData) => ({
+          ...prevData,
+          profileBanner: data.profileBanner,
+        }));
+      }
 
-        if (
-          data.profileBanner &&
-          !data.profileBanner.startsWith("data:image/jpeg;base64,")
-        ) {
-          setProfileData((prevData) => ({
-            ...prevData,
-            profileBanner: `data:image/jpeg;base64,${data.profileBanner}`,
-          }));
-        } else if (data.profileBanner) {
-          setProfileData((prevData) => ({
-            ...prevData,
-            profileBanner: data.profileBanner,
-          }));
-        }
+      setIsLoading(false);
+    } else {
+      console.error("Error fetching profile data:");
+      setIsLoading(false);
+      setFetchError(true);
+    }
 
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching profile data:", error);
-        setIsLoading(false);
-        setFetchError(true);
-      });
+    // axios
+    //   .get(`${apiBaseUrl}/user/user/${id}`)
+    //   .then((response) => {
+    //     // console.log(response.data.user);
+    //     const data = response.data.user;
+    //     // console.log(response.data.users[0]._id);
+    //     setProfileData(data);
+
+    //     // usid
+    //     const csuiteUserInfo = {
+    //       userID: data._id,
+    //       coursePurchased:
+    //         data.coursePurchased != []
+    //           ? data.coursePurchased.map((x) => x.courseId)
+    //           : [],
+    //     };
+    //     localStorage.setItem("userInfo", JSON.stringify(csuiteUserInfo));
+
+    //     if (
+    //       data.profilePic &&
+    //       !data.profilePic.startsWith("data:image/jpeg;base64,")
+    //     ) {
+    //       setProfileData((prevData) => ({
+    //         ...prevData,
+    //         profilePic: `data:image/jpeg;base64,${data.profilePic}`,
+    //       }));
+    //     } else if (data.profilePic) {
+    //       setProfileData((prevData) => ({
+    //         ...prevData,
+    //         profilePic: data.profilePic,
+    //       }));
+    //     }
+
+    //     if (
+    //       data.profileBanner &&
+    //       !data.profileBanner.startsWith("data:image/jpeg;base64,")
+    //     ) {
+    //       setProfileData((prevData) => ({
+    //         ...prevData,
+    //         profileBanner: `data:image/jpeg;base64,${data.profileBanner}`,
+    //       }));
+    //     } else if (data.profileBanner) {
+    //       setProfileData((prevData) => ({
+    //         ...prevData,
+    //         profileBanner: data.profileBanner,
+    //       }));
+    //     }
+
+    //     setIsLoading(false);
+    //   })
+    //   .catch(() => {
+    //     console.error("Error fetching profile data:");
+    //     setIsLoading(false);
+    //     setFetchError(true);
+    //   });
   }, []);
 
   async function fetchData(id) {
